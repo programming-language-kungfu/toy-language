@@ -1,6 +1,7 @@
 package scanner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Scanner {
@@ -12,16 +13,18 @@ public class Scanner {
     public Scanner(String sourceCodeString) {
         this.sourceCodeString = sourceCodeString;
         this.tokens = new ArrayList<String>();
-        this.operators = new ArrayList<Character>();
-        this.operators.add('=');
+        this.operators = Arrays.asList('=', '+', '-', '*', '/');
     }
 
     public List<String> getTokens() {
+        scan();
+        return tokens;
+    }
 
+    private void scan() {
         char currentCharacter;
 
         for (int index = 0; index < sourceCodeString.length(); index++) {
-
             currentCharacter = sourceCodeString.charAt(index);
 
             try {
@@ -30,49 +33,60 @@ public class Scanner {
                 } else if (operators.contains(currentCharacter)) {
                     tokens.add(String.valueOf(currentCharacter));
                 } else if (currentCharacter == '"') {
-                    index += 1;
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    char character;
-                    while ((character = sourceCodeString.charAt(index)) != '"') {
-                        stringBuilder.append(character);
-                        index += 1;
-                    }
-
-                    tokens.add(stringBuilder.toString());
+                    index = readString(index);
                 } else if (Character.isLetter(currentCharacter)) {
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    char character;
-                    while (!Character.isWhitespace(character = sourceCodeString.charAt(index))) {
-                        stringBuilder.append(character);
-                        index += 1;
-                    }
-
-                    tokens.add(stringBuilder.toString());
+                    index = readWord(index);
                 } else if(Character.isDigit(currentCharacter)){
-                    StringBuilder stringBuilder = new StringBuilder(currentCharacter);
-
-                    char character;
-                    while (Character.isDigit(character = sourceCodeString.charAt(index))) {
-                        stringBuilder.append(character);
-                        index += 1;
-
-                        if(index == sourceCodeString.length()){
-                            break;
-                        }
-                    }
-
-                    tokens.add(stringBuilder.toString());
-
+                    index = readNumber(currentCharacter, index);
                 } else
                     throw new IllegalArgumentException("Invalid Syntax");
             } catch (IndexOutOfBoundsException ioe) {
                 break;
             }
+        }
+    }
 
+    private int readNumber(char currentCharacter, int index) {
+        StringBuilder stringBuilder = new StringBuilder(currentCharacter);
+
+        char character;
+        while (Character.isDigit(character = sourceCodeString.charAt(index))) {
+            stringBuilder.append(character);
+            index += 1;
+
+            if(index == sourceCodeString.length()){
+                break;
+            }
         }
 
-        return tokens;
+        tokens.add(stringBuilder.toString());
+        return index;
+    }
+
+    private int readWord(int index) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        char character;
+        while (!Character.isWhitespace(character = sourceCodeString.charAt(index))) {
+            stringBuilder.append(character);
+            index += 1;
+        }
+
+        tokens.add(stringBuilder.toString());
+        return index;
+    }
+
+    private int readString(int index) {
+        index += 1;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        char character;
+        while ((character = sourceCodeString.charAt(index)) != '"') {
+            stringBuilder.append(character);
+            index += 1;
+        }
+
+        tokens.add(stringBuilder.toString());
+        return index;
     }
 }

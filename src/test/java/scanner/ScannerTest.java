@@ -1,5 +1,6 @@
 package scanner;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class ScannerTest {
     @Test
     public void shouldReturnTokensFromAssignmentStatement(){
         String sourceCode = "var a = 12";
-        Scanner scanner = new Scanner(sourceCode);
+        scanner = new Scanner(sourceCode);
 
         List<String> tokens = scanner.getTokens();
 
@@ -40,9 +41,76 @@ public class ScannerTest {
     }
 
     @Test
+    public void shouldReturnTokensFromAdditionExpression(){
+        String sourceCode = "var a = 1 + 2";
+        scanner = new Scanner(sourceCode);
+
+        List<String> tokens = scanner.getTokens();
+
+        assertTrue(tokens.contains("var"));
+        assertTrue(tokens.contains("a"));
+        assertTrue(tokens.contains("="));
+        assertTrue(tokens.contains("1"));
+        assertTrue(tokens.contains("+"));
+        assertTrue(tokens.contains("2"));
+        assertEquals(6, tokens.size());
+    }
+
+    @Test
+    public void shouldReturnTokensFromSubtractionExpression(){
+        String sourceCode = "var a = 1 - 1";
+        scanner = new Scanner(sourceCode);
+
+        List<String> tokens = scanner.getTokens();
+
+        assertTrue(tokens.contains("var"));
+        assertTrue(tokens.contains("a"));
+        assertTrue(tokens.contains("="));
+        assertTrue(tokens.contains("1"));
+        assertTrue(tokens.contains("-"));
+        assertTrue(tokens.contains("1"));
+        assertEquals(6, tokens.size());
+    }
+
+    @Test
+    public void shouldReturnTokensFromMultipleExpression(){
+        String sourceCode = "var a = 1 * 1";
+        scanner = new Scanner(sourceCode);
+
+        List<String> tokens = scanner.getTokens();
+
+        assertTrue(tokens.contains("var"));
+        assertTrue(tokens.contains("a"));
+        assertTrue(tokens.contains("="));
+        assertTrue(tokens.contains("1"));
+        assertTrue(tokens.contains("*"));
+        assertTrue(tokens.contains("1"));
+        assertEquals(6, tokens.size());
+
+    }
+
+    @Test
+    public void shouldReturnTokensFromDivisionExpression(){
+        String sourceCode = "var a = 1 / 1";
+        scanner = new Scanner(sourceCode);
+
+        List<String> tokens = scanner.getTokens();
+
+        assertTrue(tokens.contains("var"));
+        assertTrue(tokens.contains("a"));
+        assertTrue(tokens.contains("="));
+        assertTrue(tokens.contains("1"));
+        assertTrue(tokens.contains("/"));
+        assertTrue(tokens.contains("1"));
+        assertEquals(6, tokens.size());
+
+    }
+
+    @Ignore
+    @Test
     public void shouldGetTokensWithOutWhiteSpaceInSourceCode(){
         String sourceCode = "var a=12";
-        Scanner scanner = new Scanner(sourceCode);
+        scanner = new Scanner(sourceCode);
 
         List<String> tokens = scanner.getTokens();
 
