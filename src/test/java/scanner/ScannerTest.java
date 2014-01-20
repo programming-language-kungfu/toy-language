@@ -106,6 +106,20 @@ public class ScannerTest {
 
     }
 
+    @Test
+    public void testAssignmentOfStringsToVariables(){
+        String sourceCode = "var a = \"This is a string\"";
+
+        scanner = new Scanner(sourceCode);
+        List<String> tokens = scanner.getTokens();
+
+        assertTrue(tokens.contains("var"));
+        assertTrue(tokens.contains("a"));
+        assertTrue(tokens.contains("="));
+        assertTrue(tokens.contains("This is a string"));
+        assertEquals(4, tokens.size());
+    }
+
     @Ignore
     @Test
     public void shouldGetTokensWithOutWhiteSpaceInSourceCode(){
