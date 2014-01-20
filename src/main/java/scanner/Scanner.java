@@ -28,22 +28,27 @@ public class Scanner {
             currentCharacter = sourceCodeString.charAt(index);
 
             try {
-                if (Character.isWhitespace(currentCharacter)) {
-                /* do nothing */
-                } else if (operators.contains(currentCharacter)) {
-                    tokens.add(String.valueOf(currentCharacter));
-                } else if (currentCharacter == '"') {
-                    index = readString(index);
-                } else if (Character.isLetter(currentCharacter)) {
-                    index = readWord(index);
-                } else if(Character.isDigit(currentCharacter)){
-                    index = readNumber(currentCharacter, index);
-                } else
-                    throw new IllegalArgumentException("Invalid Syntax");
+                index = readNextToken(currentCharacter, index);
             } catch (IndexOutOfBoundsException ioe) {
                 break;
             }
         }
+    }
+
+    private int readNextToken(char currentCharacter, int index) {
+        if (Character.isWhitespace(currentCharacter)) {
+        /* do nothing */
+        } else if (operators.contains(currentCharacter)) {
+            tokens.add(String.valueOf(currentCharacter));
+        } else if (currentCharacter == '"') {
+            index = readString(index);
+        } else if (Character.isLetter(currentCharacter)) {
+            index = readWord(index);
+        } else if(Character.isDigit(currentCharacter)){
+            index = readNumber(currentCharacter, index);
+        } else
+            throw new IllegalArgumentException("Invalid Syntax");
+        return index;
     }
 
     private int readNumber(char currentCharacter, int index) {
