@@ -134,5 +134,7 @@ public class ScannerTest {
         assertTrue(tokens.contains("12"));
         assertEquals(4, tokens.size());
     }
-
 }
+
+//TODO=>  test for incorrectly string eg "this is a string which is not terminated.
+//TODO=>  test for invalid syntax eg a string which is not in quotes
