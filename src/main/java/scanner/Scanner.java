@@ -44,7 +44,7 @@ public class Scanner {
             index = readString(index);
         } else if (Character.isLetter(currentCharacter)) {
             index = readWord(index);
-        } else if(Character.isDigit(currentCharacter)){
+        } else if (Character.isDigit(currentCharacter)) {
             index = readNumber(currentCharacter, index);
         } else
             throw new IllegalArgumentException("Invalid Syntax");
@@ -59,7 +59,7 @@ public class Scanner {
             stringBuilder.append(character);
             index += 1;
 
-            if(index == sourceCodeString.length()){
+            if (index == sourceCodeString.length()) {
                 break;
             }
         }
@@ -73,6 +73,10 @@ public class Scanner {
 
         char character;
         while (!Character.isWhitespace(character = sourceCodeString.charAt(index))) {
+            if (operators.contains(character)) {
+                tokens.add(String.valueOf(character));
+                break;
+            }
             stringBuilder.append(character);
             index += 1;
         }
