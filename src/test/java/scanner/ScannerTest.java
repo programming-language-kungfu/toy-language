@@ -15,14 +15,12 @@ public class ScannerTest {
 
     @Test
     public void shouldReturnTokensFromPrintStatement() throws IOException {
-
         String sourceCode = "print \"Hello World\"";
         scanner = new Scanner(sourceCode);
 
         List<String> tokens = scanner.getTokens();
 
-        assertTrue(tokens.contains("Hello World"));
-        assertTrue(tokens.contains("print"));
+        assertListContains(tokens, "print", "Hello World");
         assertEquals(2, tokens.size());
     }
 
@@ -33,10 +31,7 @@ public class ScannerTest {
 
         List<String> tokens = scanner.getTokens();
 
-        assertTrue(tokens.contains("var"));
-        assertTrue(tokens.contains("a"));
-        assertTrue(tokens.contains("="));
-        assertTrue(tokens.contains("12"));
+        assertListContains(tokens, "var", "a", "=", "12");
         assertEquals(4, tokens.size());
     }
 
@@ -47,12 +42,7 @@ public class ScannerTest {
 
         List<String> tokens = scanner.getTokens();
 
-        assertTrue(tokens.contains("var"));
-        assertTrue(tokens.contains("a"));
-        assertTrue(tokens.contains("="));
-        assertTrue(tokens.contains("1"));
-        assertTrue(tokens.contains("+"));
-        assertTrue(tokens.contains("2"));
+        assertListContains(tokens, "var", "a", "=", "1", "+", "1");
         assertEquals(6, tokens.size());
     }
 
@@ -63,12 +53,7 @@ public class ScannerTest {
 
         List<String> tokens = scanner.getTokens();
 
-        assertTrue(tokens.contains("var"));
-        assertTrue(tokens.contains("a"));
-        assertTrue(tokens.contains("="));
-        assertTrue(tokens.contains("1"));
-        assertTrue(tokens.contains("-"));
-        assertTrue(tokens.contains("1"));
+        assertListContains(tokens, "var", "a", "=", "1", "-", "1");
         assertEquals(6, tokens.size());
     }
 
@@ -79,14 +64,8 @@ public class ScannerTest {
 
         List<String> tokens = scanner.getTokens();
 
-        assertTrue(tokens.contains("var"));
-        assertTrue(tokens.contains("a"));
-        assertTrue(tokens.contains("="));
-        assertTrue(tokens.contains("1"));
-        assertTrue(tokens.contains("*"));
-        assertTrue(tokens.contains("1"));
+        assertListContains(tokens, "var", "a", "=", "1", "*", "1");
         assertEquals(6, tokens.size());
-
     }
 
     @Test
@@ -96,14 +75,8 @@ public class ScannerTest {
 
         List<String> tokens = scanner.getTokens();
 
-        assertTrue(tokens.contains("var"));
-        assertTrue(tokens.contains("a"));
-        assertTrue(tokens.contains("="));
-        assertTrue(tokens.contains("1"));
-        assertTrue(tokens.contains("/"));
-        assertTrue(tokens.contains("1"));
+        assertListContains(tokens, "var", "a", "=", "1", "/", "1");
         assertEquals(6, tokens.size());
-
     }
 
     @Test
@@ -113,10 +86,7 @@ public class ScannerTest {
         scanner = new Scanner(sourceCode);
         List<String> tokens = scanner.getTokens();
 
-        assertTrue(tokens.contains("var"));
-        assertTrue(tokens.contains("a"));
-        assertTrue(tokens.contains("="));
-        assertTrue(tokens.contains("This is a string"));
+        assertListContains(tokens, "var", "a", "=", "This is a string");
         assertEquals(4, tokens.size());
     }
 
@@ -128,13 +98,17 @@ public class ScannerTest {
 
         List<String> tokens = scanner.getTokens();
 
-        assertTrue(tokens.contains("var"));
-        assertTrue(tokens.contains("a"));
-        assertTrue(tokens.contains("="));
-        assertTrue(tokens.contains("12"));
+        assertListContains(tokens, "var", "a", "=", "12");
         assertEquals(4, tokens.size());
     }
+
+    private void assertListContains(List<String> tokens, String... expectedTokens){
+        for(int index=0; index<expectedTokens.length; index++){
+            assertTrue(tokens.contains(expectedTokens[index]));
+        }
+    }
+
 }
 
 //TODO=>  test for incorrectly string eg "this is a string which is not terminated.
-//TODO=>  test for invalid syntax eg a string which is not in quotes
+//TODO=>  test for invalid syntax eg a string which is not in quotes.
