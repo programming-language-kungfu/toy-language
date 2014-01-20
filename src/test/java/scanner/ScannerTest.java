@@ -6,7 +6,10 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.List;
 
+import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class ScannerTest {
@@ -25,7 +28,7 @@ public class ScannerTest {
     }
 
     @Test
-    public void shouldReturnTokensFromAssignmentStatement(){
+    public void shouldReturnTokensFromAssignmentStatement() {
         String sourceCode = "var a = 12";
         scanner = new Scanner(sourceCode);
 
@@ -36,7 +39,7 @@ public class ScannerTest {
     }
 
     @Test
-    public void shouldReturnTokensFromAdditionExpression(){
+    public void shouldReturnTokensFromAdditionExpression() {
         String sourceCode = "var a = 1 + 2";
         scanner = new Scanner(sourceCode);
 
@@ -47,7 +50,7 @@ public class ScannerTest {
     }
 
     @Test
-    public void shouldReturnTokensFromSubtractionExpression(){
+    public void shouldReturnTokensFromSubtractionExpression() {
         String sourceCode = "var a = 1 - 1";
         scanner = new Scanner(sourceCode);
 
@@ -58,7 +61,7 @@ public class ScannerTest {
     }
 
     @Test
-    public void shouldReturnTokensFromMultipleExpression(){
+    public void shouldReturnTokensFromMultipleExpression() {
         String sourceCode = "var a = 1 * 1";
         scanner = new Scanner(sourceCode);
 
@@ -69,7 +72,7 @@ public class ScannerTest {
     }
 
     @Test
-    public void shouldReturnTokensFromDivisionExpression(){
+    public void shouldReturnTokensFromDivisionExpression() {
         String sourceCode = "var a = 1 / 1";
         scanner = new Scanner(sourceCode);
 
@@ -80,19 +83,18 @@ public class ScannerTest {
     }
 
     @Test
-    public void testAssignmentOfStringsToVariables(){
+    public void testAssignmentOfStringsToVariables() {
         String sourceCode = "var a = \"This is a string\"";
-
         scanner = new Scanner(sourceCode);
+
         List<String> tokens = scanner.getTokens();
 
         assertListContains(tokens, "var", "a", "=", "This is a string");
         assertEquals(4, tokens.size());
     }
 
-    @Ignore
     @Test
-    public void shouldGetTokensWithOutWhiteSpaceInSourceCode(){
+    public void shouldGetTokensWithOutWhiteSpaceInSourceCode() {
         String sourceCode = "var a=12";
         scanner = new Scanner(sourceCode);
 
@@ -102,10 +104,8 @@ public class ScannerTest {
         assertEquals(4, tokens.size());
     }
 
-    private void assertListContains(List<String> tokens, String... expectedTokens){
-        for(int index=0; index<expectedTokens.length; index++){
-            assertTrue(tokens.contains(expectedTokens[index]));
-        }
+    private void assertListContains(List<String> tokens, String... expectedTokens) {
+        assertThat(tokens, hasItems(expectedTokens));
     }
 
 }
