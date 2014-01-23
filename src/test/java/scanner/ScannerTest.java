@@ -112,15 +112,6 @@ public class ScannerTest {
         assertEquals(4, tokens.size());
     }
 
-    @Ignore
-    @Test
-    public void testAnTerminatedStringShouldBeInvalidSyntax(){
-        String sourceCode = "print \"This is a string";
-        scanner = new Scanner(sourceCode);
-
-        scanner.getTokens();
-    }
-
     private void assertListContains(List<String> tokens, String... expectedTokens) {
         assertThat(tokens, hasItems(expectedTokens));
     }
