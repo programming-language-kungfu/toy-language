@@ -1,5 +1,6 @@
 package scanner;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -111,6 +112,15 @@ public class ScannerTest {
         assertEquals(4, tokens.size());
     }
 
+    @Ignore
+    @Test
+    public void testAnTerminatedStringShouldBeInvalidSyntax(){
+        String sourceCode = "print \"This is a string";
+        scanner = new Scanner(sourceCode);
+
+        scanner.getTokens();
+    }
+
     private void assertListContains(List<String> tokens, String... expectedTokens) {
         assertThat(tokens, hasItems(expectedTokens));
     }
@@ -118,4 +128,3 @@ public class ScannerTest {
 }
 
 //TODO=>  test for incorrectly string eg "this is a string which is not terminated.
-//TODO=>  test for invalid syntax eg a string which is not in quotes.

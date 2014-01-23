@@ -29,7 +29,7 @@ public class Scanner {
 
             try {
                 index = readNextToken(currentCharacter, index);
-            } catch (IndexOutOfBoundsException ioe) {
+            } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
                 break;
             }
         }
