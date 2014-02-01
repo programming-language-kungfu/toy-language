@@ -38,6 +38,8 @@ public class Scanner {
     private int readNextToken(char currentCharacter, int index) {
         if (Character.isWhitespace(currentCharacter)) {
         /* do nothing */
+        } else if (currentCharacter == ';') {
+            tokens.add(String.valueOf(';'));
         } else if (operators.contains(currentCharacter)) {
             tokens.add(String.valueOf(currentCharacter));
         } else if (currentCharacter == '"') {

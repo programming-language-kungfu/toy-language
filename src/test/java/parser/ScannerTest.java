@@ -111,10 +111,19 @@ public class ScannerTest {
         assertEquals(4, tokens.size());
     }
 
+    @Test
+    public void testMultipleLinesSeperatedBySemiColon(){
+        String sourceCode = "print \"Hello World\"; var x = 1";
+        scanner = new Scanner(sourceCode);
+
+        List<String> tokens = scanner.getTokens();
+
+        assertListContains(tokens, "print", "Hello World", ";", "var", "x", "=", "1");
+        assertEquals(7, tokens.size());
+    }
+
     private void assertListContains(List<String> tokens, String... expectedTokens) {
         assertThat(tokens, hasItems(expectedTokens));
     }
 
 }
-
-//TODO=>  test for incorrectly string eg "this is a string which is not terminated.
