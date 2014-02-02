@@ -1,5 +1,9 @@
 package parser;
 
+import parser.ast.PrintStatement;
+import parser.ast.Statement;
+import parser.ast.StringLiteral;
+
 import java.util.List;
 
 public class Parser {

@@ -1,6 +1,8 @@
 package parser;
 
 import org.junit.Test;
+import parser.ast.PrintStatement;
+import parser.ast.StringLiteral;
 
 import static org.junit.Assert.assertEquals;
 
