@@ -122,6 +122,17 @@ public class ScannerTest {
         assertEquals(7, tokens.size());
     }
 
+    @Test
+    public void testMoreComplicatedAssignmentStatements(){
+        String sourceCode = "var a = 1 + 1";
+        scanner = new Scanner(sourceCode);
+
+        List<String> tokens = scanner.getTokens();
+
+        assertListContains(tokens, "var", "a", "=", "1", "+", "1");
+        assertEquals(6, tokens.size());
+    }
+
     private void assertListContains(List<String> tokens, String... expectedTokens) {
         assertThat(tokens, hasItems(expectedTokens));
     }
