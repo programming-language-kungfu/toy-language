@@ -18,7 +18,7 @@ public class AssignmentStatementTest {
     @Test
     public void testDifferentAssignmentStatementsShouldNotMatch() {
         IntegerLiteral integerLiteral = new IntegerLiteral(1);
-        IntegerLiteral differIntegerLiteral = new IntegerLiteral(1);
+        IntegerLiteral differIntegerLiteral = new IntegerLiteral(2);
 
         AssignmentStatement assignmentStatement = new AssignmentStatement("a", integerLiteral);
         AssignmentStatement differentAssignmentStatement = new AssignmentStatement("a", differIntegerLiteral);
