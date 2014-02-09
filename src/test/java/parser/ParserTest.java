@@ -1,10 +1,8 @@
 package parser;
 
+import org.junit.Ignore;
 import org.junit.Test;
-import parser.ast.IntegerLiteral;
-import parser.ast.PrintStatement;
-import parser.ast.StringLiteral;
-import parser.ast.AssignmentStatement;
+import parser.ast.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,7 +13,7 @@ public class ParserTest {
     private Parser parser;
 
     @Test
-    public void testShouldParsePrintSatement() {
+    public void testShouldParsePrintStatementWithStringLiteral() {
         sourceCode = "print \"Hello World\"";
         scanner = new Scanner(sourceCode);
 
@@ -26,15 +24,40 @@ public class ParserTest {
     }
 
     @Test
-    public void testShouldPrintAssignmentStatement() {
+    public void testShouldParseBasicAssignmentStatement() {
         sourceCode = "var a = 1";
         scanner = new Scanner(sourceCode);
-        IntegerLiteral integerLiteral = new IntegerLiteral(1);
 
         parser = new Parser(scanner.getTokens());
 
-        assertEquals(parser.abstractSyntaxTree(), new AssignmentStatement("a", integerLiteral));
+        AssignmentStatement basicAssignment = new AssignmentStatement("a", new IntegerLiteral(1));
+        assertEquals(parser.abstractSyntaxTree(), basicAssignment);
     }
 
+    @Ignore
+    @Test
+    public void testShouldParseAssignmentStatementWithBinaryExpression(){
+        sourceCode = "var a = 1 + 1";
+        scanner = new Scanner(sourceCode);
+
+        parser = new Parser(scanner.getTokens());
+
+        IntegerLiteral integerLiteral = new IntegerLiteral(1);
+        BinaryOperation binaryOperation = new BinaryOperation(integerLiteral, BinaryOperator.Add, integerLiteral);
+        assertEquals(parser.abstractSyntaxTree(), new AssignmentStatement("a", binaryOperation));
+    }
+
+    @Ignore
+    @Test
+    public void testShouldParsePrintWithExpression(){
+        sourceCode = "var number = 1 + 1; print number";
+        scanner = new Scanner(sourceCode);
+
+        parser = new Parser(scanner.getTokens());
+
+        BinaryOperation binaryOperation = new BinaryOperation(new IntegerLiteral(1), BinaryOperator.Add, new IntegerLiteral(1));
+        PrintStatement printStatement = new PrintStatement(binaryOperation);
+        assertEquals(parser.abstractSyntaxTree(), printStatement);
+    }
 
 }
