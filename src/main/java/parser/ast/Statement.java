@@ -12,7 +12,3 @@ class VariableDeclaration extends Statement {
     Expression expression;
 }
 
-class AssignmentStatement extends Statement {
-    String identifier;
-    Expression expression;
-}
