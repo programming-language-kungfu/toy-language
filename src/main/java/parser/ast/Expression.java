@@ -9,8 +9,3 @@ class Variable extends Expression {
     String identifier;
 }
 
-class BinaryOperation extends Expression {
-    Expression leftOperand;
-    BinaryOperator binaryOperator;
-    Expression rightOperand;
-}
