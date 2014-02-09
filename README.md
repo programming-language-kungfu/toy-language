@@ -19,3 +19,5 @@ var b = 2
 var c = a + b
 
 print c
+
+This language is not Turing complete as it doesnt implement control flow at the moment.
