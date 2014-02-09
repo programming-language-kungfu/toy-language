@@ -29,8 +29,7 @@ public class ParserTest {
     public void testShouldPrintAssignmentStatement() {
         sourceCode = "var a = 1";
         scanner = new Scanner(sourceCode);
-        IntegerLiteral integerLiteral = new IntegerLiteral();
-        integerLiteral.value = 1;
+        IntegerLiteral integerLiteral = new IntegerLiteral(1);
 
         parser = new Parser(scanner.getTokens());
 

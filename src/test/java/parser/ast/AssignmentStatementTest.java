@@ -9,8 +9,7 @@ public class AssignmentStatementTest {
 
     @Test
     public void testSimilarAssignmentStatementsShouldMatch() {
-        IntegerLiteral integerLiteral = new IntegerLiteral();
-        integerLiteral.value = 1;
+        IntegerLiteral integerLiteral = new IntegerLiteral(1);
 
         AssignmentStatement assignmentStatement = new AssignmentStatement("a", integerLiteral);
         assertEquals(assignmentStatement, new AssignmentStatement("a", integerLiteral));
@@ -18,10 +17,8 @@ public class AssignmentStatementTest {
 
     @Test
     public void testDifferentAssignmentStatementsShouldNotMatch() {
-        IntegerLiteral integerLiteral = new IntegerLiteral();
-        integerLiteral.value = 1;
-        IntegerLiteral differIntegerLiteral = new IntegerLiteral();
-        differIntegerLiteral.value = 2;
+        IntegerLiteral integerLiteral = new IntegerLiteral(1);
+        IntegerLiteral differIntegerLiteral = new IntegerLiteral(1);
 
         AssignmentStatement assignmentStatement = new AssignmentStatement("a", integerLiteral);
         AssignmentStatement differentAssignmentStatement = new AssignmentStatement("a", differIntegerLiteral);
