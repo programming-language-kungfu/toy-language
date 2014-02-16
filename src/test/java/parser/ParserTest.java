@@ -24,7 +24,18 @@ public class ParserTest {
     }
 
     @Test
-    public void testShouldParseBasicAssignmentStatement() {
+    public void testShouldParseBasicStringAssignmentStatement() {
+        sourceCode = "var a = \"This is a string\"";
+        scanner = new Scanner(sourceCode);
+
+        parser = new Parser(scanner.getTokens());
+
+        AssignmentStatement basicAssignment = new AssignmentStatement("a", new IntegerLiteral(1));
+        assertEquals(parser.abstractSyntaxTree(), basicAssignment);
+    }
+
+    @Test
+    public void testShouldParseBasicIntegerAssignmentStatement() {
         sourceCode = "var a = 1";
         scanner = new Scanner(sourceCode);
 
@@ -34,7 +45,6 @@ public class ParserTest {
         assertEquals(parser.abstractSyntaxTree(), basicAssignment);
     }
 
-    @Ignore
     @Test
     public void testShouldParseAssignmentStatementWithBinaryExpression(){
         sourceCode = "var a = 1 + 1";
