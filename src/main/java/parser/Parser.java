@@ -19,18 +19,19 @@ public class Parser {
                 String nextToken = tokens.get(currentIndex + 1);
 
                 if (token.equals("print")) {
-                    String substring = nextToken.substring(1, nextToken.length() - 1);
+                    String substring = nextToken.replaceAll("^\" | $\"", "");
                     if (substring instanceof String) {
                         abstractSyntaxTree = new PrintStatement(new StringLiteral(nextToken));
                     }
                 } else if (token.equals("var")) {
-                    String variableName = nextToken;
-                    String tokenAfterEquals = tokens.get(currentIndex + 2);
-                    String tokenAfterEqualsWithOutQuotes = tokenAfterEquals.substring(1, tokenAfterEquals.length() - 1);
+                    String tokenAfterEquals = tokens.get(currentIndex + 3);
+                    String tokenAfterEqualsWithOutQoutes = tokenAfterEquals.replaceAll("^\" | $\" ", "");
 
-                    if(tokenAfterEqualsWithOutQuotes instanceof String){
-                        abstractSyntaxTree = new AssignmentStatement(variableName,
-                                new StringLiteral(tokenAfterEqualsWithOutQuotes));
+                    if(tokenAfterEqualsWithOutQoutes instanceof String){
+                        abstractSyntaxTree = new AssignmentStatement(nextToken, new StringLiteral(tokenAfterEquals));
+                    }else {
+                        Integer integer = Integer.parseInt(tokenAfterEqualsWithOutQoutes);
+                        abstractSyntaxTree = new AssignmentStatement(nextToken, new IntegerLiteral(integer));
                     }
                 }
             } catch (IndexOutOfBoundsException aie) {
@@ -41,3 +42,4 @@ public class Parser {
     }
 
 }
+    
