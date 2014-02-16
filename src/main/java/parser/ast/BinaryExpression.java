@@ -2,12 +2,12 @@ package parser.ast;
 
 import parser.BinaryOperator;
 
-public class BinaryOperation extends Expression {
+public class BinaryExpression extends Expression {
     private Expression leftOperand;
     private BinaryOperator binaryOperator;
     private Expression rightOperand;
 
-    public BinaryOperation(Expression leftOperand, BinaryOperator binaryOperator, Expression rightOperand) {
+    public BinaryExpression(Expression leftOperand, BinaryOperator binaryOperator, Expression rightOperand) {
         this.leftOperand = leftOperand;
         this.binaryOperator = binaryOperator;
         this.rightOperand = rightOperand;
@@ -18,7 +18,7 @@ public class BinaryOperation extends Expression {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BinaryOperation that = (BinaryOperation) o;
+        BinaryExpression that = (BinaryExpression) o;
 
         if (binaryOperator != that.binaryOperator) return false;
         if (!leftOperand.equals(that.leftOperand)) return false;

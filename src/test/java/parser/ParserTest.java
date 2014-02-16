@@ -43,8 +43,8 @@ public class ParserTest {
         parser = new Parser(scanner.getTokens());
 
         IntegerLiteral integerLiteral = new IntegerLiteral(1);
-        BinaryOperation binaryOperation = new BinaryOperation(integerLiteral, BinaryOperator.Add, integerLiteral);
-        assertEquals(parser.abstractSyntaxTree(), new AssignmentStatement("a", binaryOperation));
+        BinaryExpression binaryExpression = new BinaryExpression(integerLiteral, BinaryOperator.Add, integerLiteral);
+        assertEquals(parser.abstractSyntaxTree(), new AssignmentStatement("a", binaryExpression));
     }
 
     @Ignore
@@ -55,8 +55,8 @@ public class ParserTest {
 
         parser = new Parser(scanner.getTokens());
 
-        BinaryOperation binaryOperation = new BinaryOperation(new IntegerLiteral(1), BinaryOperator.Add, new IntegerLiteral(1));
-        PrintStatement printStatement = new PrintStatement(binaryOperation);
+        BinaryExpression binaryExpression = new BinaryExpression(new IntegerLiteral(1), BinaryOperator.Add, new IntegerLiteral(1));
+        PrintStatement printStatement = new PrintStatement(binaryExpression);
         assertEquals(parser.abstractSyntaxTree(), printStatement);
     }
 
