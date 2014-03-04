@@ -3,10 +3,10 @@ package parser;
 import parser.ast.*;
 
 import java.util.List;
-
 public class Parser {
     private final List<String> tokens;
     private Statement abstractSyntaxTree;
+
 
     public Parser(List<String> tokens) {
         this.tokens = tokens;
@@ -27,11 +27,11 @@ public class Parser {
                     String tokenAfterEquals = tokens.get(currentIndex + 3);
                     String tokenAfterEqualsWithOutQoutes = tokenAfterEquals.replaceAll("^\" | $\" ", "");
 
-                    if(tokenAfterEqualsWithOutQoutes instanceof String){
-                        abstractSyntaxTree = new AssignmentStatement(nextToken, new StringLiteral(tokenAfterEquals));
-                    }else {
+                    try{
                         Integer integer = Integer.parseInt(tokenAfterEqualsWithOutQoutes);
                         abstractSyntaxTree = new AssignmentStatement(nextToken, new IntegerLiteral(integer));
+                    }catch(Exception e){
+                        abstractSyntaxTree = new AssignmentStatement(nextToken, new StringLiteral(tokenAfterEquals));
                     }
                 }
             } catch (IndexOutOfBoundsException aie) {
@@ -42,4 +42,3 @@ public class Parser {
     }
 
 }
-    
