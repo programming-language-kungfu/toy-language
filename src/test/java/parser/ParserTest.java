@@ -45,10 +45,9 @@ public class ParserTest {
         assertEquals(parser.abstractSyntaxTree(), basicIntegerAssignment);
     }
 
-    @Ignore
     @Test
     public void testShouldParseAssignmentStatementWithBinaryExpression(){
-        sourceCode = "var a = 1 + 1";
+        sourceCode = "var a = 1 + 1 \n";
         scanner = new Scanner(sourceCode);
 
         parser = new Parser(scanner.getTokens());
