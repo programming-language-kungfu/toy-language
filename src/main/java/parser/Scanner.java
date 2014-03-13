@@ -42,7 +42,13 @@ public class Scanner {
             tokens.add(String.valueOf(';'));
         } else if (operators.contains(currentCharacter)) {
             tokens.add(String.valueOf(currentCharacter));
-        } else if (currentCharacter == '"') {
+        } else if(currentCharacter == '\\'){
+            //TODO: read the special character
+            StringBuilder stringBuilder = new StringBuilder(currentCharacter);
+            index += 1;
+            stringBuilder.append(sourceCodeString.charAt(index));
+            tokens.add(stringBuilder.toString());
+        }else if (currentCharacter == '"') {
             index = readString(index);
         } else if (Character.isLetter(currentCharacter)) {
             index = readWord(index);
