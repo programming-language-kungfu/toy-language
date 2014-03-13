@@ -43,10 +43,7 @@ public class Scanner {
         } else if (operators.contains(currentCharacter)) {
             tokens.add(String.valueOf(currentCharacter));
         } else if(currentCharacter == '\\'){
-            //TODO: read the special character
-            StringBuilder stringBuilder = new StringBuilder(currentCharacter);
-            index += 1;
-            stringBuilder.append(sourceCodeString.charAt(index));
+            StringBuilder stringBuilder = new StringBuilder("\\n");
             tokens.add(stringBuilder.toString());
         }else if (currentCharacter == '"') {
             index = readString(index);

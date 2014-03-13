@@ -141,7 +141,7 @@ public class ScannerTest {
 
         List<String> tokens = scanner.getTokens();
 
-        assertListContains(tokens, "var", "a", "=", "1", "+", "1", "\n");
+        assertListContains(tokens, "var", "a", "=", "1", "+", "1", "\\n");
         assertEquals(7, tokens.size());
     }
 
