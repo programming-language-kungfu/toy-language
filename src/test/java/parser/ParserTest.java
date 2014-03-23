@@ -47,7 +47,7 @@ public class ParserTest {
 
     @Test
     public void testShouldParseAssignmentStatementWithBinaryExpression(){
-        sourceCode = "var a = 1 + 1 \n";
+        sourceCode = "var a = 1 + 1 \\n";
         scanner = new Scanner(sourceCode);
 
         parser = new Parser(scanner.getTokens());

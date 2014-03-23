@@ -15,9 +15,7 @@ public class Parser {
     }
 
     public Statement abstractSyntaxTree() {
-
         for (String token : tokens) {
-
             int currentIndex = tokens.indexOf(token);
 
             if (token.equals("print")) {
@@ -26,7 +24,6 @@ public class Parser {
             } else {
                 String identifier = tokens.get(1);
                 String tokenAfterEquals = tokens.get(currentIndex + 3);
-
                 abstractSyntaxTree = parseAssignmentStatementWith(identifier, tokenAfterEquals);
                 break;
             }
@@ -44,22 +41,36 @@ public class Parser {
                 result = new AssignmentStatement(identifier, new StringLiteral(tokenAfterEquals));
             }
         } else {
-            int index = tokens.indexOf(tokenAfterEquals);
-            String nextToken = tokens.get(index + 1);
-            List<String> operands = new ArrayList<String>();
-
-            while (!nextToken.equals(";") && !nextToken.equals("\\n")) {
-                operands.add(nextToken);
-                index += 1;
-                nextToken = tokens.get(index);
-            }
-
-            IntegerLiteral leftOperand = new IntegerLiteral(Integer.parseInt(tokenAfterEquals));
-            IntegerLiteral rightOperand = new IntegerLiteral(Integer.parseInt(operands.get(2)));
-            result = new AssignmentStatement(identifier, new BinaryExpression(leftOperand, BinaryOperator.Add, rightOperand));
+            result = parseAssigmentWithBinaryExpression(identifier, tokenAfterEquals);
         }
 
         return result;
+    }
+
+    private Statement parseAssigmentWithBinaryExpression(String identifier, String tokenAfterEquals) {
+        Statement result;
+        String nextToken = tokens.get(tokens.indexOf(tokenAfterEquals) + 1);
+        List<String> otherTokens = otherTokensBetweenEqualsAndEndOfLine(tokens.indexOf(tokenAfterEquals), nextToken);
+        result = generateStatementFrom(identifier, tokenAfterEquals, otherTokens);
+        return result;
+    }
+
+    private Statement generateStatementFrom(String identifier, String tokenAfterEquals, List<String> operands) {
+        Statement result;
+        IntegerLiteral leftOperand = new IntegerLiteral(Integer.parseInt(tokenAfterEquals));
+        IntegerLiteral rightOperand = new IntegerLiteral(Integer.parseInt(operands.get(2)));
+        result = new AssignmentStatement(identifier, new BinaryExpression(leftOperand, BinaryOperator.Add, rightOperand));
+        return result;
+    }
+
+    private List<String> otherTokensBetweenEqualsAndEndOfLine(int indexOfTokenAfterEquals, String nextToken) {
+        List<String> operands = new ArrayList<String>();
+        while (!nextToken.equals(";") && !nextToken.equals("\\n")) {
+            operands.add(nextToken);
+            indexOfTokenAfterEquals += 1;
+            nextToken = tokens.get(indexOfTokenAfterEquals);
+        }
+        return operands;
     }
 
     private Statement parseIntegerAssignmentWith(String identifier, String tokenAfterEquals) {
@@ -71,5 +82,4 @@ public class Parser {
         String expressionToPrint = tokens.get(currentIndex + 1);
         return new PrintStatement(new StringLiteral(expressionToPrint));
     }
-
 }
