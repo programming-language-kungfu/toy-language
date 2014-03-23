@@ -35,12 +35,30 @@ public class Parser {
     }
 
     private Statement parseAssignmentStatementWith(String identifier, String tokenAfterEquals) {
-        Statement result;
-        try {
-            result = parseIntegerAssignmentWith(identifier, tokenAfterEquals);
-        } catch (NumberFormatException nfe) {
-            result = new AssignmentStatement(identifier, new StringLiteral(tokenAfterEquals));
+        Statement result = null;
+
+        if (tokens.size() <= tokens.indexOf(tokenAfterEquals) + 1) {
+            try {
+                result = parseIntegerAssignmentWith(identifier, tokenAfterEquals);
+            } catch (NumberFormatException nfe) {
+                result = new AssignmentStatement(identifier, new StringLiteral(tokenAfterEquals));
+            }
+        } else {
+            int index = tokens.indexOf(tokenAfterEquals);
+            String nextToken = tokens.get(index + 1);
+            List<String> operands = new ArrayList<String>();
+
+            while (!nextToken.equals(";") && !nextToken.equals("\\n")) {
+                operands.add(nextToken);
+                index += 1;
+                nextToken = tokens.get(index);
+            }
+
+            IntegerLiteral leftOperand = new IntegerLiteral(Integer.parseInt(tokenAfterEquals));
+            IntegerLiteral rightOperand = new IntegerLiteral(Integer.parseInt(operands.get(2)));
+            result = new AssignmentStatement(identifier, new BinaryExpression(leftOperand, BinaryOperator.Add, rightOperand));
         }
+
         return result;
     }
 
