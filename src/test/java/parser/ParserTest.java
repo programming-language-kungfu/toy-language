@@ -57,6 +57,18 @@ public class ParserTest {
         assertEquals(parser.abstractSyntaxTree(), new AssignmentStatement("a", binaryExpression));
     }
 
+    @Test
+    public void shouldParseAssignmentWithBinaryExpressionUsingSemicolonAsEndOfLineMark(){
+        sourceCode = "var a = 1 + 1;";
+        scanner = new Scanner(sourceCode);
+
+        parser = new Parser(scanner.getTokens());
+
+        IntegerLiteral integerLiteral = new IntegerLiteral(1);
+        BinaryExpression binaryExpression = new BinaryExpression(integerLiteral, BinaryOperator.Add, integerLiteral);
+        assertEquals(parser.abstractSyntaxTree(), new AssignmentStatement("a", binaryExpression));
+    }
+
     @Ignore
     @Test
     public void testShouldParsePrintWithExpression(){
