@@ -21,35 +21,37 @@ public class Parser {
             int currentIndex = tokens.indexOf(token);
 
             if (token.equals("print")) {
-                parsePrintStatementAt(currentIndex);
+                abstractSyntaxTree = parsePrintStatementAt(currentIndex);
                 break;
             } else {
-                String tokenAfterEquals = tokens.get(currentIndex + 3);
                 String identifier = tokens.get(1);
+                String tokenAfterEquals = tokens.get(currentIndex + 3);
 
-                parseAssignmentStatementWith(identifier, tokenAfterEquals);
+                abstractSyntaxTree = parseAssignmentStatementWith(identifier, tokenAfterEquals);
                 break;
             }
         }
         return abstractSyntaxTree;
     }
 
-    private void parseAssignmentStatementWith(String identifier, String tokenAfterEquals) {
+    private Statement parseAssignmentStatementWith(String identifier, String tokenAfterEquals) {
+        Statement result;
         try {
-            parseIntegerAssignmentWith(identifier, tokenAfterEquals);
+            result = parseIntegerAssignmentWith(identifier, tokenAfterEquals);
         } catch (NumberFormatException nfe) {
-            abstractSyntaxTree = new AssignmentStatement(identifier, new StringLiteral(tokenAfterEquals));
+            result = new AssignmentStatement(identifier, new StringLiteral(tokenAfterEquals));
         }
+        return result;
     }
 
-    private void parseIntegerAssignmentWith(String identifier, String tokenAfterEquals) {
+    private Statement parseIntegerAssignmentWith(String identifier, String tokenAfterEquals) {
         Integer number = Integer.parseInt(tokenAfterEquals);
-        abstractSyntaxTree = new AssignmentStatement(identifier, new IntegerLiteral(number));
+        return new AssignmentStatement(identifier, new IntegerLiteral(number));
     }
 
-    private void parsePrintStatementAt(int currentIndex) {
+    private Statement parsePrintStatementAt(int currentIndex) {
         String expressionToPrint = tokens.get(currentIndex + 1);
-        abstractSyntaxTree = new PrintStatement(new StringLiteral(expressionToPrint));
+        return new PrintStatement(new StringLiteral(expressionToPrint));
     }
 
 }
