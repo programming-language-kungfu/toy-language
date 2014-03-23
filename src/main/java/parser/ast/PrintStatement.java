@@ -1,7 +1,7 @@
 package parser.ast;
 
 public class PrintStatement extends Statement {
-    Expression expression;
+    private Expression expression;
 
     public PrintStatement(Expression expression) {
         this.expression = expression;
