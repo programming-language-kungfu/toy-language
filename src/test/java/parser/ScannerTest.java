@@ -133,7 +133,6 @@ public class ScannerTest {
         assertEquals(6, tokens.size());
     }
 
-    //TODO: this test is not well written, i need to format the string so that accepts the newline character
     @Test
     public void testShouldRecogniseNewlineAsAToken(){
         String sourceCode = "var a = 1 + 1 \\n";
